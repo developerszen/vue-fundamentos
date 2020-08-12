@@ -1,7 +1,7 @@
 <template>
     <v-row>
         <v-col class="primary secondary--text font-weight-black" cols="12">
-            Directivas de enlace
+            Métodos y eventos
         </v-col>
         
         <v-col cols="12">
@@ -41,6 +41,22 @@
             v-bind:label="form.buy ? 'Comprar producto' : 'Solicitar más información'"
             v-bind:color="form.buy ? 'primary' : 'secondary'">
             </v-switch>
+
+            <h2>
+                <strong>Precio total:</strong>
+                {{ totalPrice }}
+            </h2>
+
+            <!-- Actions -->
+            <v-btn color="secondary" 
+            class="mr-2" 
+            v-on:click="addProduct()" 
+            v-bind:disabled="!formValid()"
+            >
+                Registrar
+            </v-btn>
+
+            <v-btn color="error" v-on:click="clearAll()">Limpiar</v-btn>
         </v-col>
     </v-row>
 </template>
@@ -55,6 +71,26 @@ export default {
                 count: 1,
                 buy: true
             },
+        }
+    },
+    computed: {
+        totalPrice() {
+            return this.form.price * this.form.count;
+        }
+    },
+    methods: {
+        clearAll() {
+            this.form.name = "";
+            this.form.price = 1;
+            this.form.count = 1;
+            this.form.buy = true;
+        },
+        addProduct() {
+            this.$emit('addProductApp', this.form);
+            this.clearAll();
+        },
+        formValid() {
+            return this.form.name && this.form.price && this.form.count;
         }
     }
 }

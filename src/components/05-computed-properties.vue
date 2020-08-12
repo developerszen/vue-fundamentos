@@ -1,7 +1,7 @@
 <template>
     <v-row>
         <v-col class="primary secondary--text font-weight-black" cols="12">
-            Directivas de enlace
+            Propiedades calculadas
         </v-col>
         
         <v-col cols="12">
@@ -41,6 +41,11 @@
             v-bind:label="form.buy ? 'Comprar producto' : 'Solicitar más información'"
             v-bind:color="form.buy ? 'primary' : 'secondary'">
             </v-switch>
+
+            <h2>
+                <strong>Precio total:</strong>
+                {{ totalPrice }}
+            </h2>
         </v-col>
     </v-row>
 </template>
@@ -55,6 +60,11 @@ export default {
                 count: 1,
                 buy: true
             },
+        }
+    },
+    computed: {
+        totalPrice() {
+            return this.form.price * this.form.count;
         }
     }
 }
