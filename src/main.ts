@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
+import ClassDinamicComponents from "@/components/08-dinamic-components.vue";
+
+
+Vue.component('class-dinamic-components', ClassDinamicComponents);
 
 Vue.config.productionTip = false
 

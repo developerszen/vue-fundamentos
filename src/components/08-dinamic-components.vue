@@ -19,7 +19,10 @@
                 Directivas
             </v-btn>
 
-            <component :is="component" class="mt-3"></component>
+            <transition name="fade" mode="out-in">
+                <component :is="component" class="mt-3"></component>
+            </transition>
+
         </v-col>
     </v-row>
 </template>
@@ -45,3 +48,15 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+</style>

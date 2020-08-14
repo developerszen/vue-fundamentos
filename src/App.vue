@@ -20,16 +20,21 @@
           </v-alert>
         </v-col>
 
-        <v-list three-line>
-          <class-loops-props 
-          v-for="(product, index) in products" :key="index"
-          :product="product"
-          :index="index"
-          @deleteProductApp="deleteProduct"
-          >
-          </class-loops-props>
-        </v-list>
+        <v-btn v-show="products.length" color="info" @click="show_list = !show_list">
+            {{ show_list ? 'Ocultar lista' : 'Ver lista' }}
+        </v-btn>
 
+        <transition name="fade" mode="out-in">
+          <v-list v-show="show_list" three-line>
+            <class-loops-props 
+            v-for="(product, index) in products" :key="index"
+            :product="product"
+            :index="index"
+            @deleteProductApp="deleteProduct"
+            >
+            </class-loops-props>
+          </v-list>
+        </transition>
       </v-row>
 
       <v-row>
@@ -41,8 +46,11 @@
         </v-col>
       </v-row>
 
+      <class-life-cycle></class-life-cycle>
+
       <class-dinamic-components></class-dinamic-components>
 
+      <class-sync></class-sync>
     </v-container>
   </v-app>
 </template>
@@ -55,7 +63,8 @@ import ClassBindDirective from "@/components/04-bind-directive.vue";
 import ClassComputedProperties from "@/components/05-computed-properties.vue";
 import ClassMethodsEvents from "@/components/06-methods-events.vue";
 import ClassLoopsProps from "@/components/07-loops-props.vue";
-import ClassDinamicComponents from "@/components/08-dinamic-components.vue";
+import ClassLifeCycle from "@/components/09-lifecycle";
+import ClassSync from "@/components/10-async.vue";
 
 export default {
   components: {
@@ -66,11 +75,13 @@ export default {
     ClassComputedProperties,
     ClassMethodsEvents,
     ClassLoopsProps,
-    ClassDinamicComponents
+    ClassLifeCycle,
+    ClassSync,
   },
   data() {
     return {
-      products: []
+      products: [],
+      show_list: true,
     }
   },
   computed: {
@@ -100,3 +111,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+</style>
